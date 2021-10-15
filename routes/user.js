@@ -1,21 +1,18 @@
 const express = require("express");
 const router = express.Router();
-//const csrf = require("csurf");
+const passport = require("../passport.js")
 
-
-// router.get("/signup", middleware.isNotLoggedIn, (req, res) => {
-//     var errorMsg = req.flash("error")[0];
-//     res.render("user/signup", {
-//         csrfToken: req.csrfToken(),
-//         errorMsg,
-//         pageName: "Sign Up",
-//     });
-// });
-
+// get auth register page
 router.get("/auth-register", (req,res) => {
     // res.sendFile("/views/user/auth-register.html")
     res.render("views/user/auth-register");
 });
+
+
+// register user
+router.post("/auth-register", (req, res) => {
+
+})
 
 
 module.exports = router;

@@ -14,8 +14,7 @@ app.use(bodyParser.urlencoded({
 // static files
 app.use(express.static('assets'))
 app.use('assets/css', express.static(path.join(__dirname + 'assets/css')))
-// app.use('/js', express.static(__dirname + 'assets/js'))
-// app.use('/img', express.static(__dirname + 'assets/img'))
+app.use('assets/images', express.static(__dirname + 'assets/images'))
 app.use('assets/js', express.static(path.join(__dirname, "assets/js")));
 
 

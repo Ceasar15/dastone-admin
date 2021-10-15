@@ -19,7 +19,12 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "html": "^1.0.0",
+    "node-emoji": "^1.11.0",
+    "node-postgres": "^0.6.2",
     "nodemon": "^2.0.13",
-    "passport-local": "^1.0.0"
+    "openssl": "^1.1.0",
+    "passport-local": "^1.0.0",
+    "pg-x": "^1.0.0",
+    "pg": "^8.7.0"
   }
 }

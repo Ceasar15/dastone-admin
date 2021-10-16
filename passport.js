@@ -21,14 +21,14 @@ passport.deserializeUser(async (userID, done) => {
 
 passport.use(new localStrategy( async function(username, password, done) {
 
-    foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username]).then(res =>
+    db.query(`SELECT * FROM users WHERE username = $1`, [username]).then(res =>
     {
-        var user = foundUser.rows[0];
-        if (user === null | foundUser.rows[0].usernamer === 'trial_name') {
+        var user = res.rows[0];
+        if (user === null ) {
             return done(null, false, { message: 'Invalid username or password' });
         } 
         else {
-            if (!bcrypt.compareSync(password, foundUser.rows[0].password)) {
+            if (!bcrypt.compareSync(password, res.rows[0].password)) {
                 return done(null, false, { message: 'Invalid password' });
             } else {
                 return done(null, false);

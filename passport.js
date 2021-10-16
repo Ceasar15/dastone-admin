@@ -35,7 +35,7 @@ passport.use(new localStrategy( async function(username, password, done) {
             }
         }
     }).catch(e => {
-        return done(null, false, { message: 'Invalid username or password' });  
+        return done(null, false, { message: 'In username or password' });  
     })
 }));
 

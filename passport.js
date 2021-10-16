@@ -21,8 +21,7 @@ passport.deserializeUser(async (userID, done) => {
 
 passport.use(new localStrategy( async function(username, password, done) {
 
-    foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username])
-    // console.log('third', foundUser.rows[0].username)
+    foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username]).then(res =>
     {
         var user = foundUser.rows[0];
         if (user === null | foundUser.rows[0].usernamer === 'trial_name') {
@@ -35,7 +34,9 @@ passport.use(new localStrategy( async function(username, password, done) {
                 return done(null, false);
             }
         }
-    };
+    }).catch(e => {
+        return done(null, false, { message: 'Invalid username or password' });  
+    })
 }));
 
 // passport.use(new localStrategy(

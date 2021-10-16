@@ -52,8 +52,6 @@ app.get('/', checkNotAuthenticated, (req, res) => {
 
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        //res.redirect("/")
-        console.log('her')
         return next();
     }
     res.render("views/user/auth-login");

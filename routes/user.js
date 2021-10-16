@@ -25,23 +25,25 @@ router.post("/auth-register", async (req, res) => {
 })
 
 
-router.get('/auth/login', checkNotAuthenticated, (req, res) => {
+router.get('/auth/login', checkAuthenticated, (req, res) => {
     res.render("views/user/auth-login");
 
 })
 
 // Add user to database.
-router.post('/auth/login', function(req, res, next) {
+router.post('/auth/login', function (req, res, next) {
     passport.authenticate('local',
-    function(err, user, info) {
-        if (err) {
-            return res.redirect('/user/auth/login', {errorMessage: err.message });
-        }
-        if (!user) {
-            return res.redirect('/user/auth/login');
-        }
-        return res.redirect('/')
-    })(req, res, next);
+        function (err, user, info) {
+            if (err) {
+                return res.redirect('/user/auth/login', {
+                    errorMessage: err.message
+                });
+            }
+            if (!user) {
+                return res.redirect('/user/auth/login');
+            }
+            return res.redirect('/')
+        })(req, res, next);
 });
 
 
@@ -50,17 +52,17 @@ router.post('/auth/login', function(req, res, next) {
 router.get('/logout', (req, res) => {
     console.log('logouuuttt', req.session)
     if (req.session) {
-      req.session.destroy(err => {
-        if (err) {
-          res.status(400).send('Unable to log out')
-        } else {
-          res.redirect('/user/auth/login')
-        }
-      });
+        req.session.destroy(err => {
+            if (err) {
+                res.status(400).send('Unable to log out')
+            } else {
+                res.redirect('/user/auth/login')
+            }
+        });
     } else {
-      res.end()
+        res.end()
     }
-  })
+})
 
 
 // router.get('/logout', (req, res) => {
@@ -80,12 +82,16 @@ router.get('/logout', (req, res) => {
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         //res.redirect("/")
-        console.log('her')
         return next();
     }
     res.render("views/user/auth-login");
-  }
+}
 
-
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+    next();
+}
 
 module.exports = router

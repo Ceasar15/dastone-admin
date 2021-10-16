@@ -43,58 +43,8 @@ router.post('/auth/login', function(req, res, next) {
             return res.redirect('/user/auth/login');
         }
         return res.redirect('/')
-
-        // return req.logIn(user, function(err) {
-        //     if (err) {
-        //         console.log('four')
-        //         return res.redirect('/user/auth/login');
-        //     } else {
-        //         console.log('one')
-        //         return res.redirect('/');
-        //     }
-        // });
     })(req, res, next);
 });
-
-
-// router.post('/auth/login', (req, res) => {
-//     passport.authenticate('local', function (err, user, info) {      
-//         if (err) {
-//             return res.status(401).json(err);
-//         }
-//         if (user) {
-//             // const token = user.generateJwt();
-//             return res.status(200).redirect('/');
-//         } else {
-//             res.status(401).json(info);
-//         }
-//     })(req, res)
-// })
-
-
-// router.post('/auth/login', passport.authenticate('local', {
-//     failureRedirect: '/user/auth/login',
-//     successRedirect: '/',
-//     failureMessage: true
-//     } 
-//     , function(err, user, info) {
-//         if (err) {
-//             return res.render('signin', { title: 'Sign In', errorMessage: err.message });
-//         }
-
-//         if (!user) {
-//             return res.render('signin', { title: 'Sign In', errorMessage: info.message });
-//         }
-
-//         return req.logIn(user, function(err) {
-//             if (err) {
-//                 return res.render('signin', { title: 'Sign In', errorMessage: err.message });
-//             } else {
-//                 return res.redirect('/');
-//             }
-//         });
-//     })(req, res, next));
-
 
 router.get('/logout', (req, res, next) => {
     if (req.isAuthenticated()) {

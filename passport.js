@@ -20,20 +20,7 @@ passport.deserializeUser(async (userID, done) => {
 
 
 passport.use(new localStrategy( async function(username, password, done) {
-    // let foundUser = {rows: [
-    //     {
-    //       id: 5,
-    //       username: 'trial_name',
-    //       email: 'trial_email',
-    //       password: '$2b$10$OeHX4XHI0zeWbmijoM5vmeq829hCr/psnI1SlFI.SJRgLoKbueh6a',
-    //       mobile_number: '0561330344'
-    //     }]};
 
-    // console.log('first', foundUser.rows[0])
-    // if (username === ){
-    //     username = 'trial_name'
-    // }
-    // console.log('USERNAME', username)
     foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username])
     // console.log('third', foundUser.rows[0].username)
     {
@@ -111,8 +98,8 @@ passport.use(new localStrategy( async function(username, password, done) {
 //         };
 //     }
 // ));
-
-foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username]).then(res => {
+let us = 'dssd'
+foundUser = db.query(`SELECT * FROM users WHERE username = $1`, [us]).then(res => {
         var user = foundUser.rows[0];
         if (user === null ) {
             return done(null, false, { message: 'Invalid username or password' });
@@ -128,6 +115,7 @@ foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username]
     console.log('Db error', e)
 })
 
+console.log('executedfs')
 
 module.exports = passport
 

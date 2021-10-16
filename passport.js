@@ -25,15 +25,15 @@ passport.use(new localStrategy( async function(username, password, done) {
     {
         var user = res.rows[0];
         if (user === undefined ) {
-            console.log('oneeeeee')
+            console.log('Invalid username or password')
             return done(null, false, { message: 'Invalid username or password' });
         } 
         else {
             if (!bcrypt.compareSync(password, res.rows[0].password)) {
-                console.log('threeeeee')
+                console.log("Invalid Password")
                 return done(null, false, { message: 'Invalid password' });
             } else {
-                console.log('fourr')
+                console.log('User Found')
                 return done(null, user);
             }
         }

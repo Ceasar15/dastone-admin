@@ -8,7 +8,6 @@ const passport = require("../passport.js")
 
 // get auth register page
 router.get("/auth-register", (req, res) => {
-    // res.sendFile("/views/user/auth-register.html")
     res.render("views/user/auth-register");
 });
 
@@ -38,7 +37,6 @@ router.post('/auth/login', function(req, res, next) {
     passport.authenticate('local',
     function(err, user, info) {
         if (err) {
-            console.log('two')
             return res.redirect('/user/auth/login', {errorMessage: err.message });
         }
         if (!user) {
@@ -46,6 +44,7 @@ router.post('/auth/login', function(req, res, next) {
             return res.redirect('/user/auth/login');
         }
         return res.redirect('/')
+
         // return req.logIn(user, function(err) {
         //     if (err) {
         //         console.log('four')
@@ -101,7 +100,7 @@ router.post('/auth/login', function(req, res, next) {
 router.get('/logout', (req, res, next) => {
     if (req.isAuthenticated()) {
         req.logout()
-        res.redirect('/')
+        res.redirect('/auth/login')
     } else {
         res.redirect('back')
     }

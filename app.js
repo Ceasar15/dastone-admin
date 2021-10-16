@@ -3,9 +3,10 @@ const express = require('express')
 const app = express()
 const port = 5000
 const path = require("path")
-// const session = require('express-session');
-// const cookieParser = require('cookie-parser');
-// const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
 
 // This allows us to pass data from the form
 app.use(express.urlencoded({
@@ -15,17 +16,21 @@ app.use(express.json());
 
 
 // Set Cookie Parser, sessions and flash
-// app.use(cookieParser('NotSoSecret'));
-// app.use(session({
-//     secret: 'something',
-//     cookie: {
-//         maxAge: 60000
-//     },
-//     resave: true,
-//     saveUninitialized: true
-// }));
-// app.use(flash());
+app.use(cookieParser('NotSoSecret'));
+app.use(session({
+    secret: 'something',
+    cookie: {
+        maxAge: 60000
+    },
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(flash());
 
+// Init passport authentication 
+app.use(passport.initialize());
+// persistent login sessions 
+app.use(passport.session());
 
 // static files
 app.use(express.static('assets'))
@@ -40,9 +45,20 @@ app.set('view engine', 'html');
 app.set('views', __dirname);
 
 
-app.get('/', (req, res) => {
+app.get('/', checkNotAuthenticated, (req, res) => {
     res.render("views/sales-index");
 })
+
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        //res.redirect("/")
+        console.log('her')
+        return next();
+    }
+    res.render("views/user/auth-login");
+  }
+  
 
 
 //routes config 

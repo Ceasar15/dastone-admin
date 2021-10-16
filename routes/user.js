@@ -4,9 +4,6 @@ const bcrypt = require('bcrypt')
 const router = express.Router();
 const passport = require("../passport.js")
 
-var logout = require('express-passport-logout');
-
-
 // get auth register page
 router.get("/auth-register", (req, res) => {
     res.render("views/user/auth-register");
@@ -28,7 +25,7 @@ router.post("/auth-register", async (req, res) => {
 })
 
 
-router.get('/auth/login', alreadyAuthenticated, (req, res) => {
+router.get('/auth/login', checkNotAuthenticated, (req, res) => {
     res.render("views/user/auth-login");
 
 })
@@ -48,12 +45,29 @@ router.post('/auth/login', function(req, res, next) {
 });
 
 
-router.get('/logout', logout());
+// router.get('/logout', logout());
+// DELETE /api/auth/logout
+router.get('/logout', (req, res) => {
+    console.log('logouuuttt', req.session)
+    if (req.session) {
+      req.session.destroy(err => {
+        if (err) {
+          res.status(400).send('Unable to log out')
+        } else {
+          res.redirect('/user/auth/login')
+        }
+      });
+    } else {
+      res.end()
+    }
+  })
+
 
 // router.get('/logout', (req, res) => {
-//         req.logout();
-// req.user=null
-//         res.redirect('/auth/login')
+//     console.log('logouuuttt', req.session)
+//     req.logout();
+//     req.user=null
+//     res.redirect('/auth/login')
 // })
 
 
@@ -63,13 +77,15 @@ router.get('/logout', logout());
 //     res.redirect('/');
 // }
 
-function alreadyAuthenticated(req, res, next) {
-    if ( req.isAuthenticated ) {
-        res.redirect('back')
-    } else {
-        next()
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        //res.redirect("/")
+        console.log('her')
+        return next();
     }
-}
+    res.render("views/user/auth-login");
+  }
+
 
 
 module.exports = router

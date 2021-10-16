@@ -82,24 +82,6 @@ passport.use(new localStrategy( async function(username, password, done) {
 // ));
 
 
-// passport.use(new localStrategy(
-//     function (username, password, done) {
-//         let foundUser = db.query('SELECT * FROM users WHERE username = $1', [username])
-//         foundUser, function (err, user) {
-//             if (err) {
-//                 return done(err);
-//             }
-//             if (!user) {
-//                 return done(null, false);
-//             }
-//             if (!user.verifyPassword(password)) {
-//                 return done(null, false);
-//             }
-//             return done(null, user);
-//         };
-//     }
-// ));
-
 
 module.exports = passport
 

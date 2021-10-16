@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+//import passport from "passport";
 const passport = require("../passport.js")
 const db = require("../db/db.js")
 const bcrypt = require('bcrypt')
@@ -30,7 +31,7 @@ router.post("/auth-register", async (req, res) => {
 })
 
 
-router.get('/auth/login', alreadyAuthenticated, (req, res, next) => {
+router.get('/auth/login', alreadyAuthenticated, (req, res) => {
     // res.render('auth.ejs', {
     //     title: 'Login',
     //     route: '/auth/login'
@@ -39,11 +40,52 @@ router.get('/auth/login', alreadyAuthenticated, (req, res, next) => {
 
 })
 
-router.post('/auth/login', passport.authenticate('local', {
-    failureRedirect: '/user/auth/login',
-    successRedirect: '/',
-    failureMessage: true
-}));
+// Add user to database.
+router.post('/auth/login', function(req, res, next) {
+    passport.authenticate('local', {
+                         successRedirect: '/',
+                         failureRedirect: '/user/auth/login'
+    }, function(err, user, info) {
+        if (err) {
+            return res.render('/user/auth/login', { title: 'Sign In', errorMessage: err.message });
+        }
+        if (!user) {
+            return res.render('/user/auth/login', { title: 'Sign In', errorMessage: info.message });
+        }
+
+        return req.logIn(user, function(err) {
+            if (err) {
+                return res.render('/user/auth/login', { title: 'Sign In', errorMessage: err.message });
+            } else {
+                return res.redirect('/');
+            }
+        });
+    })(req, res, next);
+});
+
+
+// router.post('/auth/login', passport.authenticate('local', {
+//     failureRedirect: '/user/auth/login',
+//     successRedirect: '/',
+//     failureMessage: true
+//     } 
+//     , function(err, user, info) {
+//         if (err) {
+//             return res.render('signin', { title: 'Sign In', errorMessage: err.message });
+//         }
+
+//         if (!user) {
+//             return res.render('signin', { title: 'Sign In', errorMessage: info.message });
+//         }
+
+//         return req.logIn(user, function(err) {
+//             if (err) {
+//                 return res.render('signin', { title: 'Sign In', errorMessage: err.message });
+//             } else {
+//                 return res.redirect('/');
+//             }
+//         });
+//     })(req, res, next));
 
 
 router.get('/logout', (req, res, next) => {

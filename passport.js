@@ -30,7 +30,7 @@ passport.use(new localStrategy( async function(username, password, done) {
             if (!bcrypt.compareSync(password, foundUser.rows[0].password)) {
                 return done(null, false, { message: 'Invalid password' });
             } else {
-                done(null, true);
+                return done(null, true);
             }
         }
     };

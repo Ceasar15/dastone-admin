@@ -20,17 +20,32 @@ passport.deserializeUser(async (userID, done) => {
 
 
 passport.use(new localStrategy( async function(username, password, done) {
+    // let foundUser = {rows: [
+    //     {
+    //       id: 5,
+    //       username: 'trial_name',
+    //       email: 'trial_email',
+    //       password: '$2b$10$OeHX4XHI0zeWbmijoM5vmeq829hCr/psnI1SlFI.SJRgLoKbueh6a',
+    //       mobile_number: '0561330344'
+    //     }]};
+
+    // console.log('first', foundUser.rows[0])
+    // if (username === ){
+    //     username = 'trial_name'
+    // }
+    // console.log('USERNAME', username)
     foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username])
+    // console.log('third', foundUser.rows[0].username)
     {
         var user = foundUser.rows[0];
-        if (user === null) {
+        if (user === null | foundUser.rows[0].usernamer === 'trial_name') {
             return done(null, false, { message: 'Invalid username or password' });
-        } else {
-
+        } 
+        else {
             if (!bcrypt.compareSync(password, foundUser.rows[0].password)) {
                 return done(null, false, { message: 'Invalid password' });
             } else {
-                return done(null, true);
+                return done(null, false);
             }
         }
     };

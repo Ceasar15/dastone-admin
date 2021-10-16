@@ -43,27 +43,40 @@ router.get('/auth/login', alreadyAuthenticated, (req, res) => {
 })
 
 // Add user to database.
-router.post('/auth/login', function(req, res, next) {
-    passport.authenticate('local', {
-                         successRedirect: '/',
-                         failureRedirect: '/user/auth/login'
-    }, function(err, user, info) {
-        if (err) {
-            return res.render('/user/auth/login', { title: 'Sign In', errorMessage: err.message });
-        }
-        if (!user) {
-            return res.render('/user/auth/login', { title: 'Sign In', errorMessage: info.message });
-        }
+// router.post('/auth/login', function(req, res, next) {
+//     passport.authenticate('local',
+//     function(err, user, info) {
+//         if (err) {
+//             return res.render('/user/auth/login', { title: 'Sign In', errorMessage: err.message });
+//         }
+//         if (!user) {
+//             return res.render('/user/auth/login', { title: 'Sign In', errorMessage: info.message });
+//         }
 
-        return req.logIn(user, function(err) {
-            if (err) {
-                return res.render('/user/auth/login', { title: 'Sign In', errorMessage: err.message });
-            } else {
-                return res.redirect('/');
-            }
-        });
-    })(req, res, next);
-});
+//         return req.logIn(user, function(err) {
+//             if (err) {
+//                 return res.render('/user/auth/login', { title: 'Sign In', errorMessage: err.message });
+//             } else {
+//                 return res.redirect('/');
+//             }
+//         });
+//     })(req, res, next);
+// });
+
+
+router.post('/auth/login', (req, res) => {
+    passport.authenticate('local', function (err, user, info) {      
+        if (err) {
+            return res.status(401).json(err);
+        }
+        if (user) {
+            // const token = user.generateJwt();
+            return res.status(200).redirect('/');
+        } else {
+            res.status(401).json(info);
+        }
+    })(req, res)
+})
 
 
 // router.post('/auth/login', passport.authenticate('local', {

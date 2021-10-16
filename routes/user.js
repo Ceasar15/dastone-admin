@@ -46,25 +46,29 @@ router.post('/auth/login', function(req, res, next) {
     })(req, res, next);
 });
 
-router.get('/logout', (req, res, next) => {
-        req.logout()
-        res.redirect('/auth/login')S
-})
 
+router.get('/logout', logout());
 
-function alreadyAuthenticated(req, res, next) {
-    if (req.isAuthenticated())  // <-- typo here
-        return next();
-    res.redirect('/');
-}
+// router.get('/logout', (req, res) => {
+//         req.logout();
+// req.user=null
+//         res.redirect('/auth/login')
+// })
+
 
 // function alreadyAuthenticated(req, res, next) {
-//     if ( req.isAuthenticated ) {
-//         res.redirect('back')
-//     } else {
-//         next()
-//     }
+//     if (req.isAuthenticated())  // <-- typo here
+//         return next();
+//     res.redirect('/');
 // }
+
+function alreadyAuthenticated(req, res, next) {
+    if ( req.isAuthenticated ) {
+        res.redirect('back')
+    } else {
+        next()
+    }
+}
 
 
 module.exports = router

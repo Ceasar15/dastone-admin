@@ -52,19 +52,19 @@
                                      <!-- Tab panes -->
                                     <div class="tab-content">
                                         <div class="tab-pane p-3" id="LogIn_Tab" role="tabpanel">                                        
-                                            <form class="form-horizontal auth-form" action="https://mannatthemes.com/dastone/default/index.html">
+                                            <form class="form-horizontal auth-form" action="/user/auth/login" method="POST">
                 
                                                 <div class="form-group mb-2">
                                                     <label class="form-label" for="username">Username</label>
                                                     <div class="input-group">                                                                                         
-                                                        <input type="text" class="form-control" name="username" id="username" placeholder="Enter username">
+                                                        <input type="text" class="form-control" name="username" required id="username" placeholder="Enter username">
                                                     </div>                                    
                                                 </div><!--end form-group--> 
                     
                                                 <div class="form-group mb-2">
                                                     <label class="form-label" for="userpassword">Password</label>                                            
                                                     <div class="input-group">                                  
-                                                        <input type="password" class="form-control" name="password" id="userpassword" placeholder="Enter password">
+                                                        <input type="password" class="form-control" name="password" required id="userpassword" placeholder="Enter password">
                                                     </div>                               
                                                 </div><!--end form-group--> 
                     
@@ -99,40 +99,40 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane active px-3 pt-3" id="Register_Tab" role="tabpanel">
-                                            <form class="form-horizontal auth-form" action="https://mannatthemes.com/dastone/default/index.html">
+                                            <form class="form-horizontal auth-form" action="/user/auth-register" method="POST">
             
                                                 <div class="form-group mb-2">
                                                     <label class="form-label" for="username">Username</label>
                                                     <div class="input-group">                                                                                         
-                                                        <input type="text" class="form-control" name="username" id="username" placeholder="Enter username">
+                                                        <input type="text" class="form-control" name="username" id="username"  required placeholder="Enter username">
                                                     </div>                                    
                                                 </div><!--end form-group--> 
             
                                                 <div class="form-group mb-2">
                                                     <label class="form-label" for="useremail">Email</label>
                                                     <div class="input-group">                                                                                         
-                                                        <input type="email" class="form-control" name="email" id="useremail" placeholder="Enter Email">
+                                                        <input type="email" class="form-control" name="email" id="useremail"  required placeholder="Enter Email">
                                                     </div>                                    
                                                 </div><!--end form-group-->
                     
                                                 <div class="form-group mb-2">
                                                     <label class="form-label" for="userpassword">Password</label>                                            
                                                     <div class="input-group">                                  
-                                                        <input type="password" class="form-control" name="password" id="userpassword" placeholder="Enter password">
+                                                        <input type="password" class="form-control" name="password" id="userpassword"  required placeholder="Enter password">
                                                     </div>                               
                                                 </div><!--end form-group--> 
             
                                                 <div class="form-group mb-2">
                                                     <label class="form-label" for="conf_password">Confirm Password</label>                                            
                                                     <div class="input-group">                                   
-                                                        <input type="password" class="form-control" name="conf-password" id="conf_password" placeholder="Enter Confirm Password">
+                                                        <input type="password" class="form-control" name="conf-password" id="conf_password"  placeholder="Enter Confirm Password">
                                                     </div>
                                                 </div><!--end form-group-->
                                                 
                                                 <div class="form-group mb-2">
                                                     <label class="form-label" for="mo_number">Mobile Number</label>                                            
                                                     <div class="input-group">                                 
-                                                        <input type="text" class="form-control" name="mobile number" id="mo_number" placeholder="Enter Mobile Number">
+                                                        <input type="text" class="form-control" name="mobile_number" id="mo_number" required minlength="9" maxlength="10" placeholder="Enter Mobile Number">
                                                     </div>                               
                                                 </div><!--end form-group-->  
                     
@@ -147,7 +147,7 @@
                     
                                                 <div class="form-group mb-0 row">
                                                     <div class="col-12">
-                                                        <button class="btn btn-primary w-100 waves-effect waves-light" type="button">Register <i class="fas fa-sign-in-alt ms-1"></i></button>
+                                                        <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Register <i class="fas fa-sign-in-alt ms-1"></i></button>
                                                     </div><!--end col--> 
                                                 </div> <!--end form-group-->                           
                                             </form><!--end form-->

@@ -24,6 +24,11 @@ app.set('view engine', 'html');
 app.set('views', __dirname);
 
 
+app.get('/', (req, res) => {
+    res.render("views/sales-index");
+})
+
+
 //routes config 
 const usersRoute = require("./routes/user")
 app.use("/user", usersRoute);

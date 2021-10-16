@@ -1,5 +1,4 @@
 const { Client } = require('pg');
-const express = require('express');
 const config = require('../config/config.js')
 
 

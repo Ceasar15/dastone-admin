@@ -1,6 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("../passport.js")
+const db = require("../db/db.js")
+const bcrypt = require('bcrypt')
+
+// console.log(db)
+
+
 
 // get auth register page
 router.get("/auth-register", (req, res) => {
@@ -13,26 +19,29 @@ router.get("/auth-register", (req, res) => {
 router.post("/auth-register", async (req, res) => {
     let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [req.body.username])
     console.log("username:", req.body.username);
+    console.log("num", req.body.mobile_number)
     if (foundUser.rows[0]) {
         res.redirect('/auth/register')
     } else {
         let hashedPassword = await bcrypt.hash(req.body.password, 10)
-        await db.query('INSERT INTO users (username, password) VALUES ($1, $2)', [req.body.username, hashedPassword])
+        await db.query('INSERT INTO users (username, password, email, mobile_number) VALUES ($1, $2, $3, $4)', [req.body.username, hashedPassword, req.body.email, req.body.mobile_number])
         res.redirect('/auth/login')
     }
 })
 
 
-router.get('/login', alreadyAuthenticated, (req, res, next) => {
-    res.render('auth.ejs', {
-      title: 'Login',
-      route: '/auth/login'
-    })
-  })
+router.get('/auth/login', alreadyAuthenticated, (req, res, next) => {
+    // res.render('auth.ejs', {
+    //     title: 'Login',
+    //     route: '/auth/login'
+    // })
+    res.render("views/user/auth-login");
 
-router.post('/login', passport.authenticate('local', {
-    failureRedirect: '/auth/login',
-    successRedirect: '/secure'
+})
+
+router.post('/auth/login', passport.authenticate('local', {
+    failureRedirect: '/user/auth/login',
+    successRedirect: '/'
 }))
 
 
@@ -45,7 +54,14 @@ router.get('/logout', (req, res, next) => {
     }
 })
 
+
+function alreadyAuthenticated(req, res, next) {
+    if ( req.isAuthenticated ) {
+        res.redirect('back')
+    } else {
+        next()
+    }
+}
+
+
 module.exports = router
-
-
-module.exports = router;

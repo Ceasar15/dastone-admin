@@ -21,7 +21,7 @@ passport.deserializeUser(async (userID, done) => {
 
 passport.use(new localStrategy( async function(username, password, done) {
     foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username])
-    foundUser.rows({username: username}).fetch().then(function(data) 
+    foundUser.rows[0].fetch().then(function(data) 
     //     let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [username])
     {
         var user = data;

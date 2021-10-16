@@ -19,42 +19,42 @@ passport.deserializeUser(async (userID, done) => {
 })
 
 
-// passport.use(new localStrategy( async function(username, password, done) {
-//     foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username])
-//     foundUser.rows[0].username.fetch().then(function(data) 
-//     //     let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [username])
-//     {
-//         var user = data;
-//         if (user === null) {
-//             return done(null, false, { message: 'Invalid username or password' });
-//         } else {
-
-//             if (!bcrypt.compareSync(password, foundUser.rows[0].password)) {
-//                 return done(null, false, { message: 'Invalid password' });
-//             } else {
-//                 return done(null, foundUser.rows[0]);
-//             }
-//         }
-//     });
-// }));
-
-passport.use(new localStrategy(
-    async (username, password, done) => {
-    let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [username])
-    if (foundUser.rows[0]) {
-        let decrypted = await bcrypt.compare(password, foundUser.rows[0].password)
-        if (decrypted) {
-            return done(null, foundUser.rows[0])
+passport.use(new localStrategy( async function(username, password, done) {
+    foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username])
+    foundUser.rows({username: username}).fetch().then(function(data) 
+    //     let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [username])
+    {
+        var user = data;
+        if (user === null) {
+            return done(null, false, { message: 'Invalid username or password' });
         } else {
-            return done(null, false)
-        }
-    } else {
-        return done(null, false)
-    }
-   }
 
-   )
-)
+            if (!bcrypt.compareSync(password, foundUser.rows[0].password)) {
+                return done(null, false, { message: 'Invalid password' });
+            } else {
+                return done(null, foundUser.rows[0]);
+            }
+        }
+    });
+}));
+
+// passport.use(new localStrategy(
+//     async (username, password, done) => {
+//     let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [username])
+//     if (foundUser.rows[0]) {
+//         let decrypted = await bcrypt.compare(password, foundUser.rows[0].password)
+//         if (decrypted) {
+//             return done(null, foundUser.rows[0])
+//         } else {
+//             return done(null, false)
+//         }
+//     } else {
+//         return done(null, false)
+//     }
+//    }
+
+//    )
+// )
 
 
 // passport.use(new localStrategy(

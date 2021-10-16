@@ -19,41 +19,40 @@ passport.deserializeUser(async (userID, done) => {
 })
 
 
-// passport.use(new localStrategy( async function(username, password, done) {
-//     foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username])
-//     //     let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [username])
-//     {
-//         var user = foundUser.rows[0];
-//         if (user === null) {
-//             return done(null, false, { message: 'Invalid username or password' });
-//         } else {
-
-//             if (!bcrypt.compareSync(password, foundUser.rows[0].password)) {
-//                 return done(null, false, { message: 'Invalid password' });
-//             } else {
-//                 done(null, true);
-//             }
-//         }
-//     };
-// }));
-
-passport.use(new localStrategy(
-    async (username, password, done) => {
-    let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [username])
-    if (foundUser.rows[0]) {
-        let decrypted = await bcrypt.compare(password, foundUser.rows[0].password)
-        if (decrypted) {
-            return done(null, foundUser.rows[0])
+passport.use(new localStrategy( async function(username, password, done) {
+    foundUser = await db.query(`SELECT * FROM users WHERE username = $1`, [username])
+    {
+        var user = foundUser.rows[0];
+        if (user === null) {
+            return done(null, false, { message: 'Invalid username or password' });
         } else {
-            return done(null, false)
-        }
-    } else {
-        done(null, false)
-    }
-   }
 
-   )
-)
+            if (!bcrypt.compareSync(password, foundUser.rows[0].password)) {
+                return done(null, false, { message: 'Invalid password' });
+            } else {
+                done(null, true);
+            }
+        }
+    };
+}));
+
+// passport.use(new localStrategy(
+//     async (username, password, done) => {
+//     let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [username])
+//     if (foundUser.rows[0]) {
+//         let decrypted = await bcrypt.compare(password, foundUser.rows[0].password)
+//         if (decrypted) {
+//             return done(null, true)
+//         } else {
+//             return done(null, false)
+//         }
+//     } else {
+//         done(null, false)
+//     }
+//    }
+
+//    )
+// )
 
 
 // passport.use(new localStrategy(

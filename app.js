@@ -2,22 +2,30 @@
 const express = require('express')
 const app = express()
 const port = 5000
-//const bodyParser = require("body-parser");
 const path = require("path")
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
-const flash = require('connect-flash');
+// const session = require('express-session');
+// const cookieParser = require('cookie-parser');
+// const flash = require('connect-flash');
 
 // This allows us to pass data from the form
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({
+    extended: true
+}));
 app.use(express.json());
 
 
-//bodyparser returns middleware that only parses urlencoded bodies and only 
-// looks at requests where the Content-Type header matches the type option.
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+// Set Cookie Parser, sessions and flash
+// app.use(cookieParser('NotSoSecret'));
+// app.use(session({
+//     secret: 'something',
+//     cookie: {
+//         maxAge: 60000
+//     },
+//     resave: true,
+//     saveUninitialized: true
+// }));
+// app.use(flash());
+
 
 // static files
 app.use(express.static('assets'))

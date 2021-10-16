@@ -1,14 +1,9 @@
 const express = require("express");
-
 const db = require("../db/db.js")
 const bcrypt = require('bcrypt')
 const router = express.Router();
-//import passport from "passport";
+
 const passport = require("../passport.js")
-
-
-// console.log(db)
-
 
 
 // get auth register page
@@ -34,10 +29,6 @@ router.post("/auth-register", async (req, res) => {
 
 
 router.get('/auth/login', alreadyAuthenticated, (req, res) => {
-    // res.render('auth.ejs', {
-    //     title: 'Login',
-    //     route: '/auth/login'
-    // })
     res.render("views/user/auth-login");
 
 })
@@ -47,21 +38,23 @@ router.post('/auth/login', function(req, res, next) {
     passport.authenticate('local',
     function(err, user, info) {
         if (err) {
-            res.redirect('/user/auth/login');
-
+            console.log('two')
+            return res.redirect('/user/auth/login', {errorMessage: err.message });
         }
         if (!user) {
-            res.status(500).send(err.message)
-            res.redirect('/user/auth/login');
+            // console.log('three', info.message)
+            return res.redirect('/user/auth/login');
         }
-
-        return req.logIn(user, function(err) {
-            if (err) {
-                res.redirect('/user/auth/login');
-            } else {
-                res.redirect('/');
-            }
-        });
+        return res.redirect('/')
+        // return req.logIn(user, function(err) {
+        //     if (err) {
+        //         console.log('four')
+        //         return res.redirect('/user/auth/login');
+        //     } else {
+        //         console.log('one')
+        //         return res.redirect('/');
+        //     }
+        // });
     })(req, res, next);
 });
 

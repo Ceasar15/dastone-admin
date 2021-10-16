@@ -1,9 +1,11 @@
 const express = require("express");
+
+const db = require("../db/db.js")
+const bcrypt = require('bcrypt')
 const router = express.Router();
 //import passport from "passport";
 const passport = require("../passport.js")
-const db = require("../db/db.js")
-const bcrypt = require('bcrypt')
+
 
 // console.log(db)
 

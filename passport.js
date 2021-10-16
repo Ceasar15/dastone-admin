@@ -37,23 +37,23 @@ passport.deserializeUser(async (userID, done) => {
 //     };
 // }));
 
-// passport.use(new localStrategy(
-//     async (username, password, done) => {
-//     let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [username])
-//     if (foundUser.rows[0]) {
-//         let decrypted = await bcrypt.compare(password, foundUser.rows[0].password)
-//         if (decrypted) {
-//             return done(null, foundUser.rows[0])
-//         } else {
-//             return done(null, false)
-//         }
-//     } else {
-//         return done(null, false)
-//     }
-//    }
+passport.use(new localStrategy(
+    async (username, password, done) => {
+    let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [username])
+    if (foundUser.rows[0]) {
+        let decrypted = await bcrypt.compare(password, foundUser.rows[0].password)
+        if (decrypted) {
+            return done(null, foundUser.rows[0])
+        } else {
+            return done(null, false)
+        }
+    } else {
+        done(null, false)
+    }
+   }
 
-//    )
-// )
+   )
+)
 
 
 // passport.use(new localStrategy(

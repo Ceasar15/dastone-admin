@@ -39,23 +39,6 @@ passport.use(new localStrategy( async function(username, password, done) {
     })
 }));
 
-// passport.use(new localStrategy(
-//     async (username, password, done) => {
-//     let foundUser = await db.query('SELECT * FROM users WHERE username = $1', [username])
-//     if (foundUser.rows[0]) {
-//         let decrypted = await bcrypt.compare(password, foundUser.rows[0].password)
-//         if (decrypted) {
-//             return done(null, true)
-//         } else {
-//             return done(null, false)
-//         }
-//     } else {
-//         done(null, false)
-//     }
-//    }
-
-//    )
-// )
 
 
 module.exports = passport

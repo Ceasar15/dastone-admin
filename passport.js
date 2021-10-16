@@ -99,24 +99,7 @@ passport.use(new localStrategy( async function(username, password, done) {
 //         };
 //     }
 // ));
-let us = 'dssd'
-foundUser = db.query(`SELECT * FROM users WHERE username = $1`, [us]).then(res => {
-        var user = foundUser.rows[0];
-        if (user === null ) {
-            return done(null, false, { message: 'Invalid username or password' });
-        } 
-        else {
-            if (!bcrypt.compareSync(password, foundUser.rows[0].password)) {
-                return done(null, false, { message: 'Invalid password' });
-            } else {
-                return done(null, false);
-            }
-        }  
-}).catch( e => {
-    console.log('Db error', e)
-})
 
-console.log('executedfs')
 
 module.exports = passport
 

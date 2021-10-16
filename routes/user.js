@@ -40,7 +40,6 @@ router.post('/auth/login', function(req, res, next) {
             return res.redirect('/user/auth/login', {errorMessage: err.message });
         }
         if (!user) {
-            // console.log('three', info.message)
             return res.redirect('/user/auth/login');
         }
         return res.redirect('/')

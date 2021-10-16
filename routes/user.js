@@ -2,8 +2,9 @@ const express = require("express");
 const db = require("../db/db.js")
 const bcrypt = require('bcrypt')
 const router = express.Router();
-
 const passport = require("../passport.js")
+
+var logout = require('express-passport-logout');
 
 
 // get auth register page

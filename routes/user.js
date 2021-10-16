@@ -41,8 +41,9 @@ router.get('/auth/login', alreadyAuthenticated, (req, res, next) => {
 
 router.post('/auth/login', passport.authenticate('local', {
     failureRedirect: '/user/auth/login',
-    successRedirect: '/'
-}))
+    successRedirect: '/',
+    failureMessage: true
+}));
 
 
 router.get('/logout', (req, res, next) => {
@@ -53,7 +54,6 @@ router.get('/logout', (req, res, next) => {
         res.redirect('back')
     }
 })
-
 
 function alreadyAuthenticated(req, res, next) {
     if ( req.isAuthenticated ) {

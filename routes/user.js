@@ -4,6 +4,12 @@ const bcrypt = require('bcrypt')
 const router = express.Router();
 const passport = require("../passport.js")
 
+// const { User } = require("../models/user");
+// const Token = require("../models/token");
+const sendEmail = require("../config/sendMail.js");
+
+
+
 function loggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -45,6 +51,14 @@ router.get('/auth-recover-pw', (req, res) => {
 
 })
 
+router.get('/auth-lock-screen', (req, res) => {
+    console.log(req.user.username)
+    console.log("lock screen", req.isAuthenticated())
+    res.render("views/user/auth-lock-screen", {"username": req.user.username});
+
+})
+
+
 // Add user to database.
 router.post('/auth/login', function (req, res, next) {
     passport.authenticate('local',
@@ -67,8 +81,6 @@ router.post('/auth/login', function (req, res, next) {
 });
 
 
-// router.get('/logout', logout());
-// DELETE /api/auth/logout
 router.get('/logout', (req, res) => {
     if (req.session) {
         req.session.destroy(err => {
@@ -82,35 +94,5 @@ router.get('/logout', (req, res) => {
         res.end()
     }
 })
-
-
-// router.get('/logout', (req, res) => {
-//     console.log('logouuuttt', req.session)
-//     req.logout();
-//     req.user=null
-//     res.redirect('/auth/login')
-// })
-
-
-// function alreadyAuthenticated(req, res, next) {
-//     if (req.isAuthenticated())  // <-- typo here
-//         return next();
-//     res.redirect('/');
-// }
-
-// function checkNotAuthenticated(req, res, next) {
-//     if (req.isAuthenticated()) {
-//         //res.redirect("/")
-//         return next();
-//     }
-//     res.render("views/user/auth-login");
-// }
-
-// function checkAuthenticated(req, res, next) {
-//     if (req.isAuthenticated()) {
-//         return res.redirect("/");
-//     }
-//     next();
-// }
 
 module.exports = router

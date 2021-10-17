@@ -52,9 +52,7 @@ router.get('/auth-recover-pw', (req, res) => {
 })
 
 router.get('/auth-lock-screen', (req, res) => {
-    // console.log(req.user.username)
-    console.log("lock screen", req.isAuthenticated())
-    res.render("views/user/auth-lock-screen");
+    res.render("views/user/auth-lock-screen", {username: "username"});
 
 })
 

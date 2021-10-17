@@ -10,9 +10,6 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 
 
-
-//
-
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         next();
@@ -75,15 +72,6 @@ app.get('/', checkNotAuthenticated, (req, res) => {
     console.log('home page', req.isAuthenticated())
     res.render("views/sales-index");
 })
-
-
-function loggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.redirect('/login');
-    }
-}
 
 
 //routes config 

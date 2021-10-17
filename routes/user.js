@@ -46,12 +46,11 @@ router.get('/auth/login', loggedIn, (req, res) => {
 })
 
 router.get('/auth-recover-pw', (req, res) => {
-
     res.render("views/user/auth-recover-pw");
 
 })
 
-router.get('/auth-lock-screen', (req, res) => {
+router.get('/auth-lock-screen', loggedIn, (req, res) => {
     res.render("views/user/auth-lock-screen", {username: req.user.username});
 
 })

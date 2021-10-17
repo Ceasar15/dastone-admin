@@ -26,6 +26,7 @@ router.post("/auth-register", async (req, res) => {
 
 
 router.get('/auth/login', checkAuthenticated, (req, res) => {
+    console.log("login page ", req.isAuthenticated())
     res.render("views/user/auth-login");
 
 })
@@ -42,7 +43,12 @@ router.post('/auth/login', function (req, res, next) {
             if (!user) {
                 return res.redirect('/user/auth/login');
             }
-            return res.redirect('/')
+            req.login(user, function(error) {
+                if (error) return next(error);
+                console.log("Request Login supossedly successful.");
+                console.log("login page ", req.isAuthenticated())
+                res.redirect('/')
+             });
         })(req, res, next);
 });
 
@@ -50,7 +56,6 @@ router.post('/auth/login', function (req, res, next) {
 // router.get('/logout', logout());
 // DELETE /api/auth/logout
 router.get('/logout', (req, res) => {
-    console.log('logouuuttt', req.session)
     if (req.session) {
         req.session.destroy(err => {
             if (err) {

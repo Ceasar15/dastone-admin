@@ -3,22 +3,6 @@ const db = require("./db/db.js");
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt')
 
-
-passport.serializeUser((user, done) => {
-    done(null, user.id)
-})
-
-
-passport.deserializeUser(async (userID, done) => {
-    try {
-        let foundUser = await db.query('SELECT * FROM users WHERE id = $1', [userID])
-        done(null, foundUser.rows[0])
-    } catch (err) {
-        done(err, false)
-    }
-})
-
-
 passport.use(new localStrategy( async function(username, password, done) {
 
     db.query(`SELECT * FROM users WHERE username = $1`, [username]).then(res =>
@@ -42,5 +26,21 @@ passport.use(new localStrategy( async function(username, password, done) {
         return done(null, false, { message: 'Invalid username or password' });  
     })
 }));
+
+passport.serializeUser((user, done) => {
+    done(null, user.id)
+})
+
+
+passport.deserializeUser(async (userID, done) => {
+    try {
+        let foundUser = await db.query('SELECT * FROM users WHERE id = $1', [userID])
+        done(null, foundUser.rows[0])
+    } catch (err) {
+        done(err, false)
+    }
+})
+
+
 
 module.exports = passport

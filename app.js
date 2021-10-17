@@ -1,4 +1,5 @@
 // Imports
+require('dotenv').config();
 const express = require('express')
 const app = express()
 const port = 5000
@@ -24,12 +25,13 @@ app.use(bodyParser.urlencoded({
 app.use(express.json());
 
 
-let secret = process.env.secret
-console.log(secret)
+
+
 // Set Cookie Parser, sessions and flash
-app.use(cookieParser('something'));
+let secret = process.env.secret
+app.use(cookieParser(secret));
 app.use(session({
-    secret: 'something',
+    secret: secret,
     cookie: {
         httpOnly: true /*, secure: true*/
     },
@@ -88,4 +90,4 @@ app.use(function(req,res){
 // Listen on Port 5000
 app.listen(process.env.PORT || port, () => console.info(`App listening on port ${port}`))
 
-module.exports = app;
+module.exports = app

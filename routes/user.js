@@ -4,6 +4,14 @@ const bcrypt = require('bcrypt')
 const router = express.Router();
 const passport = require("../passport.js")
 
+function loggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    return res.render("views/user/auth-login");
+}
+
+
 // get auth register page
 router.get("/auth-register", (req, res) => {
     res.render("views/user/auth-register");
@@ -25,9 +33,15 @@ router.post("/auth-register", async (req, res) => {
 })
 
 
-router.get('/auth/login', checkAuthenticated, (req, res) => {
+router.get('/auth/login', loggedIn, (req, res) => {
     console.log("login page ", req.isAuthenticated())
     res.render("views/user/auth-login");
+
+})
+
+router.get('/auth-recover-pw', (req, res) => {
+
+    res.render("views/user/auth-recover-pw");
 
 })
 
@@ -84,19 +98,19 @@ router.get('/logout', (req, res) => {
 //     res.redirect('/');
 // }
 
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        //res.redirect("/")
-        return next();
-    }
-    res.render("views/user/auth-login");
-}
+// function checkNotAuthenticated(req, res, next) {
+//     if (req.isAuthenticated()) {
+//         //res.redirect("/")
+//         return next();
+//     }
+//     res.render("views/user/auth-login");
+// }
 
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return res.redirect("/");
-    }
-    next();
-}
+// function checkAuthenticated(req, res, next) {
+//     if (req.isAuthenticated()) {
+//         return res.redirect("/");
+//     }
+//     next();
+// }
 
 module.exports = router

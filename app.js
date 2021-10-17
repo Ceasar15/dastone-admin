@@ -10,19 +10,14 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 
 
-function checkNotAuthenticated(req, res, next) {
+function loggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         next();
     }
     res.render("views/user/auth-login");
 }
 
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        res.redirect("/");
-    }
-    next();
-}
+console.log(notLoggedIn)
 
 // This allows us to pass data from the form
 app.use(bodyParser.urlencoded({
@@ -68,7 +63,7 @@ app.set('view engine', 'html');
 app.set('views', __dirname);
 
 
-app.get('/', checkNotAuthenticated, (req, res) => {
+app.get('/',  (req, res) => {
     console.log('home page', req.isAuthenticated())
     res.render("views/sales-index");
 })

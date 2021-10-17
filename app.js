@@ -24,6 +24,8 @@ app.use(bodyParser.urlencoded({
 app.use(express.json());
 
 
+let secret = process.env.secret
+console.log(secret)
 // Set Cookie Parser, sessions and flash
 app.use(cookieParser('something'));
 app.use(session({

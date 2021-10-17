@@ -63,7 +63,7 @@ app.set('view engine', 'html');
 app.set('views', __dirname);
 
 
-app.get('/',  (req, res) => {
+app.get('/', loggedIn, (req, res) => {
     console.log('home page', req.isAuthenticated())
     res.render("views/sales-index");
 })

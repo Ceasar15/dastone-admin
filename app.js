@@ -17,7 +17,6 @@ function loggedIn(req, res, next) {
     res.render("views/user/auth-login");
 }
 
-console.log(notLoggedIn)
 
 // This allows us to pass data from the form
 app.use(bodyParser.urlencoded({

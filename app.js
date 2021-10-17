@@ -33,6 +33,7 @@ app.use(session({
     },
     resave: true,
     saveUninitialized: true,
+    rolling: true,
     cookie: {
         maxAge: 60000,
         secure: false
@@ -71,6 +72,17 @@ app.get('/', loggedIn, (req, res) => {
 const usersRoute = require("./routes/user")
 app.use("/user", usersRoute);
 
+
+
+// 404 page handler
+app.use(function(req,res){
+    res.status(404).render("views/error/auth-404");
+});
+
+// 500 page handler
+app.use(function(req,res){
+    res.status(500).render("views/error/auth-500");
+});
 // Listen on Port 5000
 app.listen(process.env.PORT || port, () => console.info(`App listening on port ${port}`))
 

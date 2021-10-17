@@ -12,11 +12,10 @@ const flash = require('connect-flash');
 
 function loggedIn(req, res, next) {
     if (req.isAuthenticated()) {
-        next();
+        return next();
     }
-    res.render("views/user/auth-login");
+    return res.render("views/user/auth-login");
 }
-
 
 // This allows us to pass data from the form
 app.use(bodyParser.urlencoded({
